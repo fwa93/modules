@@ -1,16 +1,18 @@
 name: "emu"
 ## TODO nf-core: Add a description of the module and list keywords
-description: write your description here
+description: A taxonomic profiler for metagenomic 16S data optimized for long reads.
 keywords:
-  - sort
+  - Metagenomics
+  - 16S reads
+  - Nanopore 
 tools:
   - "emu":
       ## TODO nf-core: Add a description and other details for the software below
       description: "Emu is a relative abundance estimator for 16s genomic data."
-      homepage: "None"
-      documentation: "None"
+      homepage: "https://gitlab.com/treangenlab/emu"
+      documentation: "https://gitlab.com/treangenlab/emu"
       tool_dev_url: "None"
-      doi: ""
+      doi: "https://doi.org/10.1038/s41592-022-01520-4"
       licence: "['MIT']"
 
 ## TODO nf-core: Add a description of all of the variables used as input
@@ -21,13 +23,12 @@ input:
       description: |
         Groovy Map containing sample information
         e.g. [ id:'test', single_end:false ]
-  #
-  ## TODO nf-core: Delete / customise this example input
-  - bam:
-      type: file
-      description: BAM/CRAM/SAM file
-      pattern: "*.{bam,cram,sam}"
 
+  - reads:
+      type: file
+      description: |
+        List of input concatenated FastQ files 
+ 
 ## TODO nf-core: Add a description of all of the variables used as output
 output:
   #Only when we have meta
@@ -36,16 +37,15 @@ output:
       description: |
         Groovy Map containing sample information
         e.g. [ id:'test', single_end:false ]
-  #
+  - report:
+      type: file
+      description: Report (tsv file) over detected species and estimated number of reads and relative abundance 
+      pattern: "*{.tsv}"
+
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-  ## TODO nf-core: Delete / customise this example output
-  - bam:
-      type: file
-      description: Sorted BAM/CRAM/SAM file
-      pattern: "*.{bam,cram,sam}"
 
 authors:
   - "@fwa93"

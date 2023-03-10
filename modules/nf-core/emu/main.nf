@@ -35,11 +35,12 @@ process EMU {
     //               https://github.com/nf-core/modules/blob/master/modules/nf-core/bwa/index/main.nf
     // TODO nf-core: Where applicable please provide/convert compressed files as input/output
     //               e.g. "*.fastq.gz" and NOT "*.fastq", "*.bam" and NOT "*.sam" etc.
-    tuple val(meta), path(bam)
+    tuple val(meta), path(reads)
 
     output:
     // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
-    tuple val(meta), path("*.bam"), emit: bam
+    tuple val(meta), path("*.tsv"), emit: tsv
+
     // TODO nf-core: List additional required output channels/values here
     path "versions.yml"           , emit: versions
 
@@ -59,17 +60,17 @@ process EMU {
     // TODO nf-core: Please replace the example samtools command below with your module's command
     // TODO nf-core: Please indent the command appropriately (4 spaces!!) to help with readability ;)
     """
-    samtools \\
-        sort \\
+    emu \\
+        abundance \\
         $args \\
-        -@ $task.cpus \\
-        -o ${prefix}.bam \\
-        -T $prefix \\
-        $bam
+        --keep-counts \\
+        --threads $task.cpus \\
+        --output-dir results \\
+        $reads
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        emu: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//' ))
+        emu: \$( emu -v | sed -e "s/^emu//g" )
     END_VERSIONS
     """
 }
