@@ -950,6 +950,10 @@ emu:
   - modules/nf-core/emu/**
   - tests/modules/nf-core/emu/**
 
+emu/abundance:
+  - modules/nf-core/emu/abundance/**
+  - tests/modules/nf-core/emu/abundance/**
+
 endorspy:
   - modules/nf-core/endorspy/**
   - tests/modules/nf-core/endorspy/**
